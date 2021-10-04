@@ -12,12 +12,18 @@ namespace TestApp.MSUnitTests
     {
         // Method_Scenario_ExpectedBehavior
 
+        private MathCalculator mathCalculator;
+
+        [TestInitialize] // wywoływane dla każdej metody testującej
+        public void Setup()
+        {
+            // Arrange
+            mathCalculator = new MathCalculator();
+        }
+
         [TestMethod]
         public void Add_PassedArguments_ReturnsSumOfAguments()
         {
-            // Arrange
-            MathCalculator mathCalculator = new MathCalculator();
-
             // Act
             var result = mathCalculator.Add(1, 2);
 
@@ -28,9 +34,6 @@ namespace TestApp.MSUnitTests
         [TestMethod]
         public void Max_FirstArgumentIsGreater_ReturnsFirstArgument()
         {
-            // Arrange
-            MathCalculator mathCalculator = new MathCalculator();
-
             // Act
             var result = mathCalculator.Max(2, 1);
 
@@ -41,9 +44,6 @@ namespace TestApp.MSUnitTests
         [TestMethod]
         public void Max_SecondArgumentIsGreater_ReturnsSecondArgument()
         {
-            // Arrange
-            MathCalculator mathCalculator = new MathCalculator();
-
             // Act
             var result = mathCalculator.Max(1, 2);
 
