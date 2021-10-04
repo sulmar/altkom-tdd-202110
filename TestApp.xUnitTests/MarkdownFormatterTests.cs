@@ -10,10 +10,10 @@ namespace TestApp.xUnitTests
     public class MarkdownFormatterTests
     {
         [Theory]
-        [InlineData("abc", "**abc**")]
-        [InlineData("a", "**a**")]
-        [InlineData("Lorem ipsum", "**Lorem ipsum**")]
-        public void FormatAsBold_ValidContent_ShouldReturnsContentEncloseDoubleAsterix(string content, string expected)
+        [InlineData("abc")]
+        [InlineData("a")]
+        [InlineData("Lorem ipsum")]
+        public void FormatAsBold_ValidContent_ShouldReturnsContentEncloseDoubleAsterix(string content)
         {
             // Arrange
             MarkdownFormatter markdownFormatter = new MarkdownFormatter();
@@ -22,8 +22,30 @@ namespace TestApp.xUnitTests
             var result = markdownFormatter.FormatAsBold(content);
 
             // Assert
-            Assert.Equal(expected, result);
+            // Assert.Equal(expected, result);
+
+            Assert.StartsWith("**", result);
+            Assert.Contains(content, result);
+            Assert.EndsWith("**", result);
         }
+
+        [Theory]
+        [InlineData("abc")]
+        [InlineData("a")]
+        [InlineData("Lorem ipsum")]
+        public void FormatAsBold_ValidContent_ShouldReturnsContentEncloseSingleAsterix(string content)
+        {
+            // Arrange
+            MarkdownFormatter markdownFormatter = new MarkdownFormatter();
+
+            // Act
+            var result = markdownFormatter.FormatAsItalic(content);
+
+            Assert.StartsWith("*", result);
+            Assert.Contains(content, result);
+            Assert.EndsWith("*", result);
+        }
+
 
         [Fact]
         public void FormatAsBold_EmptyContent_ShouldThrowsFormatException()
