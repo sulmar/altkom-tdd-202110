@@ -54,14 +54,25 @@ namespace TestApp.MSUnitTests
         [TestMethod]
         public void Max_ArgumentsAreEqual_ReturnsFirstArgument()
         {
-            // Arrange
-            MathCalculator mathCalculator = new MathCalculator();
-
             // Act
             var result = mathCalculator.Max(1, 1);
 
             // Assert
             Assert.AreEqual(1, result);
+        }
+
+        
+        [DataTestMethod]
+        [DataRow(2, 1, 2, DisplayName = "First argument is greater")]
+        [DataRow(1, 2, 2, DisplayName = "Second argument is greater")]
+        [DataRow(1, 1, 1, DisplayName = "Arguments are equal")]
+        public void Max_ValidArguments_ReturnsMaxArgument(int first, int second, int expected)
+        {
+            // Act
+            var result = mathCalculator.Max(first, second);
+
+            // Assert
+            Assert.AreEqual(expected, result);
         }
     }
 }
