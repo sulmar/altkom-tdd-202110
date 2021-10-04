@@ -70,5 +70,24 @@ namespace TestApp.MSUnitTests
             logger.Log(WhiteSpace);
         }
 
+
+        // Testowanie zdarzeń (events)
+        [TestMethod]
+        public void Log_ValidMessage_RaiseMessageLoggedEvent()
+        {
+            // Arrange
+            Logger logger = new Logger();
+            DateTime id = default(DateTime);
+            logger.MessageLogged += (sender, args) => { id = args; };
+
+            // Act
+            logger.Log("a");
+
+            // Assert
+            Assert.AreNotEqual(default(DateTime), id);
+
+
+        }
+
     }
 }

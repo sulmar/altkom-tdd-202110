@@ -20,7 +20,7 @@ namespace TestApp
             // Write the log to a storage
             // ...
 
-            MessageLogged?.Invoke(this, DateTime.UtcNow);
+           MessageLogged?.Invoke(this, DateTime.UtcNow);
         }
     }
 }
