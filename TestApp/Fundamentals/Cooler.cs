@@ -10,14 +10,31 @@ namespace TestApp.Fundamentals
     {
         public bool IsEnabled { get; private set; }
 
-        public void Start()
+        public CoolerModes Mode  { get; private set; }
+
+        public void ChangeMode()
         {
-            IsEnabled = true;
+            if (!IsEnabled)
+                throw new InvalidOperationException();
+
+            if (Mode == CoolerModes.Cooling)
+            {
+                Mode = CoolerModes.Heating;
+            }
+            else
+            {
+                Mode = CoolerModes.Cooling;
+            }
         }
 
-        public void Stop()
-        {
-            IsEnabled = false;
-        }
+        public void Start() => IsEnabled = true;
+
+        public void Stop() => IsEnabled = false;
+    }
+
+    public enum CoolerModes
+    {
+        Cooling,
+        Heating
     }
 }

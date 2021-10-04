@@ -49,6 +49,58 @@ namespace TestApp.MSUnitTests
 
         }
 
-       
+        [ExpectedException(typeof(InvalidOperationException))]
+        [TestMethod]
+        public void ChangeMode_WhenDisabled_ThrowsInvalidOperationException()
+        {
+            // Arrange
+            Cooler cooler = new Cooler();
+
+            // Act
+            cooler.ChangeMode();
+        }
+
+        [TestMethod]
+        public void Cooler_WhenCreated_SetsIsCoolingMode()
+        {
+            // Act
+            Cooler cooler = new Cooler();
+
+            // Assert
+            Assert.AreEqual(CoolerModes.Cooling, cooler.Mode);
+        }
+
+        [TestMethod]
+        public void ChangeMode_CoolingWhenCalled_SetsHeatingMode()
+        {
+            // Arrange
+            Cooler cooler = new Cooler();
+            cooler.Start();
+
+            // Act
+            cooler.ChangeMode();
+
+            // Assert
+            Assert.AreEqual(CoolerModes.Heating, cooler.Mode);
+
+        }
+
+        [TestMethod]
+        public void ChangeMode_HeatingWhenCalled_SetsCoolingMode()
+        {
+            // Arrange
+            Cooler cooler = new Cooler(); // -> Cooling
+            cooler.Start();  
+            cooler.ChangeMode();  // => Heating
+
+            // Act
+            cooler.ChangeMode();
+
+            // Assert
+            Assert.AreEqual(CoolerModes.Cooling, cooler.Mode);
+        }
+
+
+
     }
 }
