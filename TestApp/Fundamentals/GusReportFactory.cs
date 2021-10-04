@@ -17,7 +17,7 @@ namespace TestApp.Fundamentals.Gus
     }
 
     // Osobowość prawna
-    public class LegalPersonality : Report
+    public class LegalPersonalityReport : Report
     {
 
     }
@@ -30,7 +30,20 @@ namespace TestApp.Fundamentals.Gus
             // F -> Działalność fizyczna
             // nieznany -> NotSupportedException
 
-            throw new NotImplementedException();
+            switch(type)
+            {
+                case "P":
+                case "LP":
+                case "LF":
+                    return new LegalPersonalityReport(); break;
+
+                case "F":
+                    return new SoleTraderReport(); break;
+
+                default:
+                    throw new NotSupportedException();
+
+            }
         }
     }
 
