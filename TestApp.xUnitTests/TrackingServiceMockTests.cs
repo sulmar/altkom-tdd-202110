@@ -12,19 +12,25 @@ namespace TestApp.xUnitTests
     // Install-Package Moq
     public class TrackingServiceMockTests
     {
+        private Mock<IFileReader> mockFileReader;
+        private IFileReader fileReader;
+        private TrackingService trackingService;
+
+        public TrackingServiceMockTests()
+        {
+            // Arrange
+            mockFileReader = new Mock<IFileReader>();
+            fileReader = mockFileReader.Object;
+            trackingService = new TrackingService(fileReader);
+        }
+
         [Fact]
         public void Get_EmptyFile_ShouldThrowsApplicationException()
         {
             // Arrange
-            Mock<IFileReader> mockFileReader = new Mock<IFileReader>();
-
             mockFileReader
                 .Setup(fr => fr.ReadAllText(It.IsAny<string>()))
                 .Returns(string.Empty);
-
-            IFileReader fileReader = mockFileReader.Object;
-
-            TrackingService trackingService = new TrackingService(fileReader);
 
             // Act
             Action act = () => trackingService.Get();
@@ -38,15 +44,9 @@ namespace TestApp.xUnitTests
         public void Get_InvalidFile_ShouldThrowsFormatException()
         {
             // Arrange
-            Mock<IFileReader> mockFileReader = new Mock<IFileReader>();
-
             mockFileReader
                 .Setup(fr => fr.ReadAllText(It.IsAny<string>()))
                 .Returns("a");
-
-            IFileReader fileReader = mockFileReader.Object;
-
-            TrackingService trackingService = new TrackingService(fileReader);
 
             // Act
             Action act = () => trackingService.Get();
@@ -59,19 +59,11 @@ namespace TestApp.xUnitTests
         public void Get_ValidFile_ShouldReturnsLocation()
         {
             // Arrange
-            Mock<IFileReader> mockFileReader = new Mock<IFileReader>();
-
             string json = "{\"Latitude\":54.19438,\"Longitude\":16.17222 }";
 
             mockFileReader
                 .Setup(fr => fr.ReadAllText(It.IsAny<string>()))
                 .Returns(json);
-
-            // Tworzy instancję wskazanej atrapy
-            IFileReader fileReader = mockFileReader.Object;
-
-
-            TrackingService trackingService = new TrackingService(fileReader);
 
             // Act
             var location = trackingService.Get();
