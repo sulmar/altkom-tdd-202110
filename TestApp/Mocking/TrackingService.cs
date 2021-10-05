@@ -44,7 +44,7 @@ namespace TestApp.Mocking
         {
             // string json = File.ReadAllText("tracking.txt");
 
-            string json = fileReader.ReadAllText("tracking.txt");
+            string json = fileReader.ReadAllText("tracking.json");
 
             if (string.IsNullOrEmpty(json))
                 throw new ApplicationException();

@@ -19,7 +19,7 @@ namespace TestApp.xUnitTests
             Mock<IFileReader> mockFileReader = new Mock<IFileReader>();
 
             mockFileReader
-                .Setup(fr => fr.ReadAllText("tracking.txt"))
+                .Setup(fr => fr.ReadAllText(It.IsAny<string>()))
                 .Returns(string.Empty);
 
             IFileReader fileReader = mockFileReader.Object;
@@ -37,7 +37,22 @@ namespace TestApp.xUnitTests
         [Fact]
         public void Get_InvalidFile_ShouldThrowsFormatException()
         {
-            throw new NotImplementedException();
+            // Arrange
+            Mock<IFileReader> mockFileReader = new Mock<IFileReader>();
+
+            mockFileReader
+                .Setup(fr => fr.ReadAllText(It.IsAny<string>()))
+                .Returns("a");
+
+            IFileReader fileReader = mockFileReader.Object;
+
+            TrackingService trackingService = new TrackingService(fileReader);
+
+            // Act
+            Action act = () => trackingService.Get();
+
+            // Assert
+            Assert.Throws<FormatException>(act);
         }
 
         [Fact]
@@ -49,7 +64,7 @@ namespace TestApp.xUnitTests
             string json = "{\"Latitude\":54.19438,\"Longitude\":16.17222 }";
 
             mockFileReader
-                .Setup(fr => fr.ReadAllText("tracking.txt"))
+                .Setup(fr => fr.ReadAllText(It.IsAny<string>()))
                 .Returns(json);
 
             // Tworzy instancję wskazanej atrapy
