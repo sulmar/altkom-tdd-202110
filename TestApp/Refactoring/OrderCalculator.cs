@@ -12,7 +12,9 @@ namespace TestApp.Refactoring
     {
         public DateTime OrderDate { get; set; }
         public Customer Customer { get; set; }
-        public decimal Amount => Details.Sum(p => p.LineTotal);
+
+        // public decimal TotalAmount => Details.Sum(p => p.LineTotal);
+        public decimal TotalAmount { get; set; }
 
         public ICollection<OrderDetail> Details = new Collection<OrderDetail>();
 
@@ -88,7 +90,7 @@ namespace TestApp.Refactoring
 
     #endregion
 
-    // Promocja Happy Hours - 10% upustu w godzinach od 9 do 15
+    // Promocja Happy Hours - 10% upustu w godzinach od 9:00 do 15:00
     public class OrderCalculator
     {
         public decimal CalculateDiscount(Order order)
