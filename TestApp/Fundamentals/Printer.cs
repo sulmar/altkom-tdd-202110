@@ -6,20 +6,58 @@ using System.Threading.Tasks;
 
 namespace TestApp.Fundamentals
 {
-    public class Printer
+    // Klasy generyczne (uogólnione)
+    public class TextPrinter : Printer<string>
     {
-        private string last;
 
-        public void Print(string content)
+    }
+
+    public class DatePrinter : Printer<DateTime>
+    {
+
+    }
+
+    public class NumberPrinter : Printer<int>
+    {
+
+    }
+
+    public class MoneyPrinter : Printer<decimal>
+    {
+
+    }
+
+    // Szablon klasy - Klasa generyczna
+    public class Printer<TContent>
+    {
+        private TContent last;
+
+        public void Print(TContent content)
         {
             Console.WriteLine(content);
 
             last = content;
         }
 
-        public string GetLast()
+        public TContent GetLast()
         {
             return last;
         }
     }
+
+    public class Video
+    {
+        public string Title { get; set; }
+        public byte[] Movie { get; set; }
+    }
+
+    public class Messanger
+    {
+        // Szablon metody - Metoda generyczna
+        public void Send<TContent>(TContent content)
+        {
+            Console.WriteLine(content);
+        }
+    }
+    
 }

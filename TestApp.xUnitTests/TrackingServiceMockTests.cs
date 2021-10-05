@@ -15,7 +15,23 @@ namespace TestApp.xUnitTests
         [Fact]
         public void Get_EmptyFile_ShouldThrowsApplicationException()
         {
-            throw new NotImplementedException();
+            // Arrange
+            Mock<IFileReader> mockFileReader = new Mock<IFileReader>();
+
+            mockFileReader
+                .Setup(fr => fr.ReadAllText("tracking.txt"))
+                .Returns(string.Empty);
+
+            IFileReader fileReader = mockFileReader.Object;
+
+            TrackingService trackingService = new TrackingService(fileReader);
+
+            // Act
+            Action act = () => trackingService.Get();
+
+            // Assert
+            Assert.Throws<ApplicationException>(act);
+
         }
 
         [Fact]
@@ -28,13 +44,26 @@ namespace TestApp.xUnitTests
         public void Get_ValidFile_ShouldReturnsLocation()
         {
             // Arrange
-            // Mock<
+            Mock<IFileReader> mockFileReader = new Mock<IFileReader>();
 
-            // TrackingService trackingService = new TrackingService()
+            string json = "{\"Latitude\":54.19438,\"Longitude\":16.17222 }";
+
+            mockFileReader
+                .Setup(fr => fr.ReadAllText("tracking.txt"))
+                .Returns(json);
+
+            // Tworzy instancję wskazanej atrapy
+            IFileReader fileReader = mockFileReader.Object;
+
+
+            TrackingService trackingService = new TrackingService(fileReader);
 
             // Act
+            var location = trackingService.Get();
 
             // Assert
+            Assert.Equal(54.19438, location.Latitude);
+            Assert.Equal(16.17222, location.Longitude);
         }
     }
 }

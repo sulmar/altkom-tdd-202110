@@ -14,7 +14,7 @@ namespace TestApp.xUnitTests
         public void GetLast_MultiContent_ShouldReturnsLastContent()
         {
             // Arrange
-            Printer printer = new Printer();
+            TextPrinter printer = new TextPrinter();
 
             printer.Print("a");
             printer.Print("b");
