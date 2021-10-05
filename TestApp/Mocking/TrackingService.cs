@@ -9,19 +9,55 @@ using System.Text;
 
 namespace TestApp.Mocking
 {
-    // dotnet add package NGeoHash
-    public class TrackingService
+    public interface IFileReader
     {
-        public Location Get()
+        string ReadAllText(string path);
+    }
+
+    public class TextFileReader : IFileReader
+    {
+        public string ReadAllText(string path)
         {
             string json = File.ReadAllText("tracking.txt");
 
-            Location location = JsonConvert.DeserializeObject<Location>(json);
+            return json;
+        }
+    }
 
-            if (location == null)
-                throw new ApplicationException("Error parsing the location");
+    // dotnet add package NGeoHash
+    public class TrackingService
+    {
+        private IFileReader fileReader;
 
-            return location;
+        public TrackingService(IFileReader fileReader)
+        {
+            this.fileReader = fileReader;
+        }
+
+        public Location Get()
+        {
+            // string json = File.ReadAllText("tracking.txt");
+
+            string json = fileReader.ReadAllText("tracking.txt");
+
+            if (string.IsNullOrEmpty(json))
+                throw new ApplicationException();
+
+            try
+            {
+                Location location = JsonConvert.DeserializeObject<Location>(json);
+
+                if (location == null)
+                    throw new ApplicationException("Error parsing the location");
+
+                return location;
+            }
+            catch(Newtonsoft.Json.JsonReaderException)
+            {
+                throw new FormatException();
+            }
+
+            
         }
 
 

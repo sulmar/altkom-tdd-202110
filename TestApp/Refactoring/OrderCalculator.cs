@@ -90,8 +90,23 @@ namespace TestApp.Refactoring
 
     #endregion
 
+
+    public interface IOrderCalculator
+    {
+        decimal CalculateDiscount(Order order);
+    }
+
+
+    public class JohnOrderCalculator : IOrderCalculator
+    {
+        public decimal CalculateDiscount(Order order)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
     // Promocja Happy Hours - 10% upustu w godzinach od 8:00 do 15:00
-    public class OrderCalculator
+    public class OrderCalculator : IOrderCalculator
     {
         private TimeSpan beginHour;
         private TimeSpan endHour;
