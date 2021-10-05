@@ -90,12 +90,34 @@ namespace TestApp.Refactoring
 
     #endregion
 
-    // Promocja Happy Hours - 10% upustu w godzinach od 9:00 do 15:00
+    // Promocja Happy Hours - 10% upustu w godzinach od 8:00 do 15:00
     public class OrderCalculator
     {
+        private TimeSpan beginHour;
+        private TimeSpan endHour;
+        private decimal percentage;
+
+        public OrderCalculator(TimeSpan beginHour, TimeSpan endHour, decimal percentage)
+        {
+            this.beginHour = beginHour;
+            this.endHour = endHour;
+            this.percentage = percentage;
+            
+        }
+
         public decimal CalculateDiscount(Order order)
         {
-            throw new NotImplementedException();
+            if (order == null)
+                throw new ArgumentNullException();
+
+            if (order.OrderDate.TimeOfDay >= beginHour && order.OrderDate.TimeOfDay < endHour)
+            {
+                return order.TotalAmount * percentage;
+            }
+            else
+            {
+                return 0;
+            }
         }
     }
 
