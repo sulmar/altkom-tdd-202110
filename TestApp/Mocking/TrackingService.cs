@@ -29,6 +29,12 @@ namespace TestApp.Mocking
     {
         private IFileReader fileReader;
 
+        public TrackingService()
+            : this(new TextFileReader())
+        {
+
+        }
+
         public TrackingService(IFileReader fileReader)
         {
             this.fileReader = fileReader;
