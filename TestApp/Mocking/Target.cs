@@ -54,19 +54,24 @@ namespace TestApp.Mocking
 
             if (client.Connected)
             {
-                // Maszyna stanów
-                if (State == TargetStates.Disabled)
-                {
-                    State = TargetStates.Enabled;
-                }
-                else
-                {
-                    State = TargetStates.Disabled;
-                }
+               ChangeState();
             }
             else
             {
                 throw new ApplicationException();
+            }
+        }
+
+        private void ChangeState()
+        {
+            // Maszyna stanów
+            if (State == TargetStates.Disabled)
+            {
+                State = TargetStates.Enabled;
+            }
+            else
+            {
+                State = TargetStates.Disabled;
             }
         }
 

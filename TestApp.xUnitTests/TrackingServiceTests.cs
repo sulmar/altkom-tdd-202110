@@ -8,6 +8,10 @@ using Xunit;
 
 namespace TestApp.xUnitTests
 {
+
+    // Fake - udawać
+    // Mock - duszek / zjawa / atrapa
+
     public class FakeValidFile : IFileReader
     {
         // Koszalin lat: 54.19438 lng: 16.17222
