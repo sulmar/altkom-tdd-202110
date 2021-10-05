@@ -43,6 +43,8 @@ namespace TestApp.Mocking
 
         public RCar(ITcpClient client)
         {
+            this.State = TargetStates.Disabled;
+
             this.client = client;
         }
 
@@ -60,6 +62,10 @@ namespace TestApp.Mocking
                 {
                     State = TargetStates.Disabled;
                 }
+            }
+            else
+            {
+                throw new ApplicationException();
             }
         }
 
