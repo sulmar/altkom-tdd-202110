@@ -12,13 +12,42 @@ namespace TestApp.Mocking
 
     }
 
+    public interface ITcpClient
+    {
+        void Connect(string hostname, int port);
+        bool Connected { get; }
+    }
+
+    public class StandardTcpClient : ITcpClient
+    {
+        private TcpClient client;
+
+        public StandardTcpClient()
+        {
+            client = new TcpClient();
+        }
+
+        public bool Connected => client.Connected;
+
+        public void Connect(string hostname, int port)
+        {
+            client.Connect(hostname, port);
+        }
+    }
+
     public class RCar : Target
     {
         public TargetStates State { get; private set; }
 
+        private ITcpClient client;
+
+        public RCar(ITcpClient client)
+        {
+            this.client = client;
+        }
+
         public void Push()
         {
-            TcpClient client = new TcpClient();
             client.Connect("127.0.0.1", 9000);
 
             if (client.Connected)
