@@ -8,7 +8,7 @@ using Xunit;
 
 namespace TestApp.xUnitTests
 {
-    public class ConnectedTcpClient : ITcpClient
+    public class FakeConnectedTcpClient : ITcpClient
     {
         public bool Connected => true;
 
@@ -17,7 +17,7 @@ namespace TestApp.xUnitTests
         }
     }
 
-    public class DisconnectedTcpClient : ITcpClient
+    public class FakeDisconnectedTcpClient : ITcpClient
     {
         public bool Connected => false;
 
@@ -32,7 +32,7 @@ namespace TestApp.xUnitTests
         public void Push_WhenConnect_ShouldSetsEnabledState()
         {
             // Arrange
-            RCar target = new RCar(new ConnectedTcpClient());
+            RCar target = new RCar(new FakeConnectedTcpClient());
 
             // Act
             target.Push();
@@ -45,7 +45,7 @@ namespace TestApp.xUnitTests
         public void Push_WhenConnect_ShouldSetsDisableState()
         {
             // Arrange
-            RCar target = new RCar(new ConnectedTcpClient());
+            RCar target = new RCar(new FakeConnectedTcpClient());
             target.Push();
 
             // Act
@@ -59,7 +59,7 @@ namespace TestApp.xUnitTests
         public void Push_WhenDisconnected_ShouldThrowApplicationException()
         {
             // Arrange
-            RCar target = new RCar(new DisconnectedTcpClient());
+            RCar target = new RCar(new FakeDisconnectedTcpClient());
 
             // Act
             Action act = () => target.Push();

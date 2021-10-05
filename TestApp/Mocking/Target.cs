@@ -54,6 +54,7 @@ namespace TestApp.Mocking
 
             if (client.Connected)
             {
+                // Maszyna stanów
                 if (State == TargetStates.Disabled)
                 {
                     State = TargetStates.Enabled;
