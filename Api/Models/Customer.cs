@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Bogus.Extensions.Poland;
+using GenFu;
 
 namespace Api.Models
 {
@@ -63,9 +64,12 @@ namespace Api.Models
 
         public FakeCustomerRepository()
         {
-            CustomerFaker faker = new CustomerFaker();
+            // Bogus
+            // CustomerFaker faker = new CustomerFaker();
+            // customers = faker.Generate(100);
 
-            customers = faker.Generate(100);
+            // Install-Package GenFu
+            customers = A.ListOf<Customer>();
         }
 
         public List<Customer> Get()
