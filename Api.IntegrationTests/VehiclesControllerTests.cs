@@ -13,17 +13,14 @@ namespace Api.IntegrationTests
     {
         // snippet: tm + 2 x Tab
 
-        [Fact]
-        public void Get_ExistsId_ShouldReturnsOk()
+        private readonly HttpClient client;
+
+        public VehiclesControllerTests()
         {
-            // Arrange
-
-            int id = 1;
-
             var hostBuilder = new HostBuilder()  // add Microsoft.Extensions.Hosting
-                .ConfigureWebHost(webHost =>
-                {
-                    webHost.UseTestServer(); // add using Microsoft.AspNetCore.TestHost;
+                  .ConfigureWebHost(webHost =>
+                  {
+                      webHost.UseTestServer(); // add using Microsoft.AspNetCore.TestHost;
                     webHost.UseStartup<Api.Startup>(); // add using Microsoft.AspNetCore.Hosting;
 
                 });
@@ -32,7 +29,15 @@ namespace Api.IntegrationTests
 
             // HttpClient client = new HttpClient();
 
-            HttpClient client = host.GetTestClient();
+            this.client = host.GetTestClient();
+
+        }
+
+        [Fact]
+        public void Get_ExistsId_ShouldReturnsOk()
+        {
+            // Arrange
+            int id = 1;
 
             string url = $"/api/vehicles/{id}";
 
@@ -49,22 +54,6 @@ namespace Api.IntegrationTests
         {
             // Arrange
             int id = int.MaxValue;
-
-            var hostBuilder = new HostBuilder()  // add Microsoft.Extensions.Hosting
-              .ConfigureWebHost(webHost =>
-              {
-                  webHost.UseTestServer(); // add using Microsoft.AspNetCore.TestHost;
-                    webHost.UseStartup<Api.Startup>(); // add using Microsoft.AspNetCore.Hosting;
-
-                });
-
-            var host = hostBuilder.Start();
-
-            // HttpClient client = new HttpClient();
-
-            HttpClient client = host.GetTestClient();
-
-           
 
             string url = $"/api/vehicles/{id}";
 
