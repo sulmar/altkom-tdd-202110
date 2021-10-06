@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Bogus.Extensions.Poland;
 
 namespace Api.Models
 {
@@ -14,6 +15,7 @@ namespace Api.Models
         public Gender Gender { get; set; }
         public DateTime BirthDay { get; set; }
         public decimal Salary { get; set; }
+        public string Pesel { get; set; }
         public bool IsRemoved { get; set; }
     }
 
@@ -38,13 +40,20 @@ namespace Api.Models
     {
         public CustomerFaker()
         {
+            StrictMode(true);
+            UseSeed(0);
             RuleFor(p => p.Id, f => f.IndexFaker);
             RuleFor(p => p.FirstName, f => f.Person.FirstName);
             RuleFor(p => p.LastName, f => f.Person.LastName);
             RuleFor(p => p.Gender, f => (Gender) f.Person.Gender);
-            RuleFor(p => p.BirthDay, f => f.Date.Past(-30));
+            RuleFor(p => p.BirthDay, f => f.Person.DateOfBirth);
             RuleFor(p => p.Salary, f => f.Random.Decimal(1, 1000));
             RuleFor(p => p.IsRemoved, f => f.Random.Bool(0.2f));
+
+            // Install-Package Sulmar.Bogus.Extensions.Poland
+            // Ignore(p => p.Pesel);
+
+            RuleFor(p => p.Pesel, f => f.Person.Pesel());   // add using Bogus.Extensions.Poland;
         }
     }
 
