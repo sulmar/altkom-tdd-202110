@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FluentAssertions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,6 +8,9 @@ using Xunit;
 
 namespace TestApp.xUnitTests
 {
+    // Install-Package FluentAssertions
+
+
     public class MarkdownFormatterTests
     {
         [Theory]
@@ -24,9 +28,18 @@ namespace TestApp.xUnitTests
             // Assert
             // Assert.Equal(expected, result);
 
-            Assert.StartsWith("**", result);
-            Assert.Contains(content, result);
-            Assert.EndsWith("**", result);
+            //Assert.StartsWith("**", result);
+            //Assert.Contains(content, result);
+            //Assert.EndsWith("**", result);
+
+            // Fluent Assertions
+
+            result.Should()
+                .StartWith("**")
+                .And
+                .Contain(content)
+                .And
+                .EndWith("**");
         }
 
         [Theory]
@@ -41,9 +54,16 @@ namespace TestApp.xUnitTests
             // Act
             var result = markdownFormatter.FormatAsItalic(content);
 
-            Assert.StartsWith("*", result);
-            Assert.Contains(content, result);
-            Assert.EndsWith("*", result);
+            //Assert.StartsWith("*", result);
+            //Assert.Contains(content, result);
+            //Assert.EndsWith("*", result);
+
+            result.Should()
+                .StartWith("*")
+                .And
+                .Contain(content)
+                .And
+                .EndWith("*");
         }
 
 
@@ -57,7 +77,9 @@ namespace TestApp.xUnitTests
             Action act = () => markdownFormatter.FormatAsBold(string.Empty);
 
             // Assert
-            Assert.Throws<FormatException>(act);
+            // Assert.Throws<FormatException>(act);
+
+            act.Should().ThrowExactly<FormatException>();
         }
     }
 }
