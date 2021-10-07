@@ -9,6 +9,7 @@ using Xunit;
 
 namespace Api.IntegrationTests
 {
+
     public class RedisTests
     {
 
